@@ -318,7 +318,7 @@ namespace BlackJack
         public int CalcPoints()
         {
             if (this.numOfCArds == 0)
-                throw new Exception("Can't calculate points of card set: no cards in set ");
+                return 0;
             int result = 0;
             for (int i = 0; i < numOfCArds; i++)
             {
