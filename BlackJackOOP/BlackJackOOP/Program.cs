@@ -49,12 +49,7 @@ namespace BlackJack
         protected Card[] Cards;
 
         public CardsSet() { }
-
-        //Создать заготовку для набора из заданного кол-ва карт
-        public CardsSet(int cardNum)
-        {
-            Card[] Deck = new Card[cardNum];
-        }
+        
 
         //Показать карты из колоды, начиная со start и length кол-во 
         public void ShowDeck(int start, int length)
@@ -74,7 +69,7 @@ namespace BlackJack
     class Deck : CardsSet
     {        
         //Создать определённый тип колоды
-        public Deck(DeckType type) : base((int)DeckType.Standar36)
+        public Deck(DeckType type) 
         {
             if (type == DeckType.Standar36)
             {
@@ -313,7 +308,7 @@ namespace BlackJack
         public int numOfCArds { get; private set; }
 
         //Выделить место дл набора карт у игрока
-        public PlayerSet(int cardNum) : base(cardNum)
+        public PlayerSet(int cardNum)
         {
             this.Cards = new Card[cardNum]; 
             numOfCArds = 0;
