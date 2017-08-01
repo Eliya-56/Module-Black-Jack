@@ -67,200 +67,32 @@ namespace BlackJack
 
     //Описание колоды карт
     class Deck : CardsSet
-    {        
+    {
+        private int numOfCards;
+
         //Создать определённый тип колоды
         public Deck(DeckType type) 
         {
+            numOfCards = (int)type;
             if (type == DeckType.Standar36)
             {
-                this.Cards = new Card[36]
+                Cards = new Card[36];
+                for(int suit = 0,counter = 0; suit < 4; suit++)
                 {
-                    new Card
+                    for (int value = 2; value < 12; value++)
                     {
-                        Value = CardValue.card6,
-                        Suit = CardSuit.Clubs
-                    },
-                    new Card
-                    {
-                        Value = CardValue.card7,
-                        Suit = CardSuit.Clubs
-                    },
-                    new Card
-                    {
-                        Value = CardValue.card8,
-                        Suit = CardSuit.Clubs
-                    },
-                    new Card
-                    {
-                        Value = CardValue.card9,
-                        Suit = CardSuit.Clubs
-                    },
-                    new Card
-                    {
-                        Value = CardValue.card10,
-                        Suit = CardSuit.Clubs
-                    },
-                    new Card
-                    {
-                        Value = CardValue.Jack,
-                        Suit = CardSuit.Clubs
-                    },
-                    new Card
-                    {
-                        Value = CardValue.Lady,
-                        Suit = CardSuit.Clubs
-                    },
-                    new Card
-                    {
-                        Value = CardValue.King,
-                        Suit = CardSuit.Clubs
-                    },
-                    new Card
-                    {
-                        Value = CardValue.Ace,
-                        Suit = CardSuit.Clubs
-                    },
-
-                    new Card
-                    {
-                        Value = CardValue.card6,
-                        Suit = CardSuit.Hearts
-                    },
-                    new Card
-                    {
-                        Value = CardValue.card7,
-                        Suit = CardSuit.Hearts
-                    },
-                    new Card
-                    {
-                        Value = CardValue.card8,
-                        Suit = CardSuit.Hearts
-                    },
-                    new Card
-                    {
-                        Value = CardValue.card9,
-                        Suit = CardSuit.Hearts
-                    },
-                    new Card
-                    {
-                        Value = CardValue.card10,
-                        Suit = CardSuit.Hearts
-                    },
-                    new Card
-                    {
-                        Value = CardValue.Jack,
-                        Suit = CardSuit.Hearts
-                    },
-                    new Card
-                    {
-                        Value = CardValue.Lady,
-                        Suit = CardSuit.Hearts
-                    },
-                    new Card
-                    {
-                        Value = CardValue.King,
-                        Suit = CardSuit.Hearts
-                    },
-                    new Card
-                    {
-                        Value = CardValue.Ace,
-                        Suit = CardSuit.Hearts
-                    },
-
-                    new Card
-                    {
-                        Value = CardValue.card6,
-                        Suit = CardSuit.Diamond
-                    },
-                    new Card
-                    {
-                        Value = CardValue.card7,
-                        Suit = CardSuit.Diamond
-                    },
-                    new Card
-                    {
-                        Value = CardValue.card8,
-                        Suit = CardSuit.Diamond
-                    },
-                    new Card
-                    {
-                        Value = CardValue.card9,
-                        Suit = CardSuit.Diamond
-                    },
-                    new Card
-                    {
-                        Value = CardValue.card10,
-                        Suit = CardSuit.Diamond
-                    },
-                    new Card
-                    {
-                        Value = CardValue.Jack,
-                        Suit = CardSuit.Diamond
-                    },
-                    new Card
-                    {
-                        Value = CardValue.Lady,
-                        Suit = CardSuit.Diamond
-                    },
-                    new Card
-                    {
-                        Value = CardValue.King,
-                        Suit = CardSuit.Diamond
-                    },
-
-                    new Card
-                    {
-                        Value = CardValue.Ace,
-                        Suit = CardSuit.Diamond
-                    },
-
-                    new Card
-                    {
-                        Value = CardValue.card6,
-                        Suit = CardSuit.Spades
-                    },
-                    new Card
-                    {
-                        Value = CardValue.card7,
-                        Suit = CardSuit.Spades
-                    },
-                    new Card
-                    {
-                        Value = CardValue.card8,
-                        Suit = CardSuit.Spades
-                    },
-                    new Card
-                    {
-                        Value = CardValue.card9,
-                        Suit = CardSuit.Spades
-                    },
-                    new Card
-                    {
-                        Value = CardValue.card10,
-                        Suit = CardSuit.Spades
-                    },
-                    new Card
-                    {
-                        Value = CardValue.Jack,
-                        Suit = CardSuit.Spades
-                    },
-                    new Card
-                    {
-                        Value = CardValue.Lady,
-                        Suit = CardSuit.Spades
-                    },
-                    new Card
-                    {
-                        Value = CardValue.King,
-                        Suit = CardSuit.Spades
-                    },
-
-                    new Card
-                    {
-                        Value = CardValue.Ace,
-                        Suit = CardSuit.Spades
+                        if(value == 5)
+                        {
+                            value++;
+                        }
+                        Cards[counter] = new Card
+                        {
+                            Value = (CardValue)value,
+                            Suit = (CardSuit)suit
+                        };
+                        counter++;
                     }
-                };
+                }
             }
         }
 
@@ -278,7 +110,7 @@ namespace BlackJack
 
             for (int i = 0; i < this.Cards.Length; i++)
             {
-                int j = rand.Next(0, 35);
+                int j = rand.Next(0, numOfCards - 1);
                 var temp = Cards[i];
                 Cards[i] = Cards[j];
                 Cards[j] = temp;
@@ -301,126 +133,141 @@ namespace BlackJack
         }
     }
 
-    //Описание набора карт у игрока
-    class PlayerSet : CardsSet
+    //Описание набора карт для BJ у игрока
+    class BlackJackSet : CardsSet
     {
         //Считает количество карт в наборе
-        public int numOfCArds { get; private set; }
+        public int NumOfCArds { get; private set; }
 
         //Выделить место дл набора карт у игрока
-        public PlayerSet(int cardNum)
+        public BlackJackSet(int cardNum)
         {
             this.Cards = new Card[cardNum]; 
-            numOfCArds = 0;
+            NumOfCArds = 0;
         }
 
         //Посчитать очки для текущего количества карт
-        public int CalcPoints()
+        public int CalcPoints
         {
-            if (this.numOfCArds == 0)
-                return 0;
-            int result = 0;
-            for (int i = 0; i < numOfCArds; i++)
+            get
             {
-                result += (int)this.Cards[i].Value;
+                if (this.NumOfCArds == 0)
+                    return 0;
+                int result = 0;
+                for (int i = 0; i < NumOfCArds; i++)
+                {
+                    result += (int)this.Cards[i].Value;
+                }
+                return result;
+
             }
-            return result;
         }
+
 
         //Сбрасывает набор карт
         public void Reset()
         {
-            numOfCArds = 0;
-            for(int i = 0; i < numOfCArds; i++)
+            NumOfCArds = 0;
+            for(int i = 0; i < NumOfCArds; i++)
             {
                 this.Cards[i] = new Card();
             }
         }
 
         //Взять карту в набор
-        public void takeCard(Card takenCard)
+        public void TakeCard(Card takenCard)
         {
-            this.Cards[numOfCArds++] = takenCard;
+            this.Cards[NumOfCArds++] = takenCard;
         }
     }
 
-    //Игра BlackJack
+    class Player
+    {
+        public BlackJackSet BJSet { get; private set; }
+        public int NumOfBJVictories { get; set; }
+
+        public Player()
+        {
+            BJSet = new BlackJackSet(34);
+            NumOfBJVictories = 0;
+        }
+    }
+
     class BlackJackGame
     {
         private Deck GameDeck;
-        private PlayerSet UserSet;
-        private PlayerSet CompSet;
-        private Random rand;
+        private BlackJackSet UserSet;
+        private BlackJackSet CompSet;
+        private Random Rand;
 
-        public BlackJackGame()
+        public BlackJackGame(BlackJackSet Computer, BlackJackSet User)
         {
-            rand = new Random();
+            Rand = new Random();
             GameDeck = new Deck(DeckType.Standar36);
-            UserSet = new PlayerSet(34);
-            CompSet = new PlayerSet(34);
+            CompSet = Computer;
+            UserSet = User;
         }
 
         private void DistributionOfCards(string Choice)
         {
+            BlackJackSet[] sets;
             if (Choice == "1")
             {
-                UserSet.takeCard(GameDeck.GiveCard());
-                CompSet.takeCard(GameDeck.GiveCard());
-                UserSet.takeCard(GameDeck.GiveCard());
-                CompSet.takeCard(GameDeck.GiveCard());
+               sets = new BlackJackSet[2] { UserSet, CompSet };
             }
-            else if (Choice == "2")
+            else //if (Choice == "2")
             {
-                CompSet.takeCard(GameDeck.GiveCard());
-                UserSet.takeCard(GameDeck.GiveCard());
-                CompSet.takeCard(GameDeck.GiveCard());
-                UserSet.takeCard(GameDeck.GiveCard());
+                sets = new BlackJackSet[2] { CompSet, UserSet };
+            }
+            for (int i = 1; i <= 4; i++)
+            {
+                sets[i % 2].TakeCard(GameDeck.GiveCard());
             }
         }
 
         private void UserGame()
         {
-            string UserChoise = null;
-            int UserCounter = 0;
+            string userChoise = null;
+            int userCounter = 0;
             do
             {
-                if (UserCounter != 0)
+                if (userCounter != 0)
                 {
-                    if (UserChoise != "y")
+                    if (userChoise != "y")
                     {
                         Console.Clear();
                         Console.Beep(500, 200);
                         Console.Write("I don't understand ");
                         Console.ForegroundColor = ConsoleColor.Green;
-                        Console.Write(UserChoise);
+                        Console.Write(userChoise);
                         Console.ForegroundColor = ConsoleColor.Black;
                         Console.WriteLine("!!!");
                         Console.WriteLine();
                         Console.WriteLine("You have: ");
-                        UserSet.ShowDeck(0, UserSet.numOfCArds);
+                        UserSet.ShowDeck(0, UserSet.NumOfCArds);
                         Console.WriteLine();
-                        Console.WriteLine("It's: " + UserSet.CalcPoints() + " points");
+                        Console.WriteLine("It's: " + UserSet.CalcPoints + " points");
                         Console.WriteLine("Take one more card? y/n");
-                        UserChoise = Console.ReadLine();
+                        userChoise = Console.ReadLine();
                         continue;
                     }
                     else
                     {
-                        UserSet.takeCard(GameDeck.GiveCard());
+                        UserSet.TakeCard(GameDeck.GiveCard());
                     }
                 }
                 Console.Clear();
                 Console.WriteLine();
                 Console.WriteLine("You have: ");
-                UserSet.ShowDeck(0, UserSet.numOfCArds);
+                UserSet.ShowDeck(0, UserSet.NumOfCArds);
                 Console.WriteLine();
-                Console.WriteLine("It's: " + UserSet.CalcPoints() + " points");
+                Console.WriteLine("It's: " + UserSet.CalcPoints + " points");
                 Console.WriteLine("Take one more card? y/n");
-                UserChoise = Console.ReadLine();
+                userChoise = Console.ReadLine();
 
-                UserCounter++;
+                userCounter++;
             }
-            while (UserChoise != "n");
+            while (userChoise != "n");
         }
 
         private void CompGame()
@@ -428,26 +275,26 @@ namespace BlackJack
             Console.Clear();
             Console.WriteLine("My turn");
             Thread.Sleep(600);
-            bool CompTake = true;        //Флаг для решения компьютера брать ли ещё карту 
-            int CompCounter = 0;         //Счётчик количества циклов компьтера для принятия решения
+            bool compTake = true;        //Флаг для решения компьютера брать ли ещё карту 
+            int compCounter = 0;         //Счётчик количества циклов компьтера для принятия решения
             do
             {
-                int Decision = rand.Next(3, 10);
-                if ((CompSet.CalcPoints() + Decision) > 21)
+                int decision = Rand.Next(3, 10);
+                if ((CompSet.CalcPoints + decision) > 21)
                 {
-                    CompTake = false;
+                    compTake = false;
                 }
                 else
                 {
                     Console.WriteLine("I take one more");
                     Thread.Sleep(400);
-                    CompTake = true;
-                    CompSet.takeCard(GameDeck.GiveCard());
+                    compTake = true;
+                    CompSet.TakeCard(GameDeck.GiveCard());
                 }
 
-                CompCounter++;
+                compCounter++;
             }
-            while (CompTake);  //Компьтер принял решение
+            while (compTake);  //Компьтер принял решение
         }
 
         private bool ShowResults()
@@ -455,68 +302,68 @@ namespace BlackJack
             Console.Clear();
             Console.WriteLine("You have");
             Console.WriteLine();
-            UserSet.ShowDeck(0, UserSet.numOfCArds);
+            UserSet.ShowDeck(0, UserSet.NumOfCArds);
             Console.WriteLine();
-            Console.WriteLine("It's " + UserSet.CalcPoints() + " points");
+            Console.WriteLine("It's " + UserSet.CalcPoints + " points");
             Console.WriteLine();
             Console.WriteLine("I have");
             Console.WriteLine();
-            CompSet.ShowDeck(0, CompSet.numOfCArds);
+            CompSet.ShowDeck(0, CompSet.NumOfCArds);
             Console.WriteLine();
-            Console.WriteLine("It's " + CompSet.CalcPoints() + " points");
+            Console.WriteLine("It's " + CompSet.CalcPoints + " points");
 
             Console.WriteLine();
 
             //Флаги переполнения
-            bool UserOverflow = UserSet.CalcPoints() > 21;
-            bool CompOverflow = CompSet.CalcPoints() > 21;
+            bool userOverflow = UserSet.CalcPoints > 21;
+            bool compOverflow = CompSet.CalcPoints > 21;
             //Флаги выигрыша
-            bool UserWin = false;
-            bool CompWin = false;
+            bool userWin = false;
+            bool compWin = false;
 
             //Сравниваем результаты и подводим итоги игры
-            if (UserOverflow && !CompOverflow)
+            if (userOverflow && !compOverflow)
             {
-                CompWin = true;
-                UserWin = false;
+                compWin = true;
+                userWin = false;
             }
-            else if (!UserOverflow && CompOverflow)
+            else if (!userOverflow && compOverflow)
             {
-                CompWin = false;
-                UserWin = true;
+                compWin = false;
+                userWin = true;
             }
-            else if (!UserOverflow && !CompOverflow)
+            else if (!userOverflow && !compOverflow)
             {
-                if (UserSet.CalcPoints() > CompSet.CalcPoints())
+                if (UserSet.CalcPoints > CompSet.CalcPoints)
                 {
-                    UserWin = true;
-                    CompWin = false;
+                    userWin = true;
+                    compWin = false;
                 }
-                else if (UserSet.CalcPoints() < CompSet.CalcPoints())
+                else if (UserSet.CalcPoints < CompSet.CalcPoints)
                 {
-                    CompWin = true;
-                    UserWin = false;
+                    compWin = true;
+                    userWin = false;
                 }
             }
             else
             {
-                if (UserSet.CalcPoints() < CompSet.CalcPoints())
+                if (UserSet.CalcPoints < CompSet.CalcPoints)
                 {
-                    UserWin = true;
-                    CompWin = false;
+                    userWin = true;
+                    compWin = false;
                 }
-                else if (UserSet.CalcPoints() > CompSet.CalcPoints())
+                else if (UserSet.CalcPoints > CompSet.CalcPoints)
                 {
-                    CompWin = true;
-                    UserWin = false;
+                    compWin = true;
+                    userWin = false;
                 }
             }
-            if (CompWin)
+            if (compWin)
             {
                 Console.WriteLine("I won");
                 return false;
             }
-            else if (UserWin)
+            else if (userWin)
             {
                 Console.WriteLine("You won");
                 return true;
@@ -530,12 +377,15 @@ namespace BlackJack
 
         public bool PlayGame()
         {
+            GameDeck = new Deck(DeckType.Standar36);
+            CompSet.Reset();
+            UserSet.Reset();
             Console.WriteLine("Game starts ...");
             Console.WriteLine();
             //Перемешивание колоды
-            GameDeck.Shuffle(rand);
+            GameDeck.Shuffle(Rand);
 
-            string ChoiseFirst = "";
+            string choiseFirst = "";
             do
             {
                 Console.Clear();
@@ -543,15 +393,15 @@ namespace BlackJack
                 Console.WriteLine("Who will take firt card?");
                 Console.WriteLine("1 - You");
                 Console.WriteLine("2 - Computer");
-                ChoiseFirst = Console.ReadLine();
-                if ((ChoiseFirst == "1") || (ChoiseFirst == "2"))
+                choiseFirst = Console.ReadLine();
+                if ((choiseFirst == "1") || (choiseFirst == "2"))
                     break;
             }
             while (true);
 
-            DistributionOfCards(ChoiseFirst);
+            DistributionOfCards(choiseFirst);
 
-            if (ChoiseFirst == "1")
+            if (choiseFirst == "1")
             {
                 UserGame();
                 CompGame();
@@ -576,46 +426,46 @@ namespace BlackJack
             Console.Clear();
 
             //Цикл в которос происходит игра
-            string GameChoise = "y";
-            int GameCounter = 0;
-            int UserVictories = 0;
-            int CompVictories = 0;
+            Player user = new Player();
+            Player comp = new Player();
+            BlackJackGame BlackJack = new BlackJackGame(comp.BJSet, user.BJSet);
+            string gameChoise = "y";
+            int gameCounter = 0;
             do
             {
                 Console.Clear();
-                if(GameChoise != "y")
+                if(gameChoise != "y")
                 {
                     Console.Beep(500, 200);
                     Console.Write("I don't understand ");
                     Console.ForegroundColor = ConsoleColor.Green;
-                    Console.Write(GameChoise);
+                    Console.Write(gameChoise);
                     Console.ForegroundColor = ConsoleColor.Black;
                     Console.WriteLine("!!!");
                     Console.WriteLine("More game? y/n");
-                    GameChoise = Console.ReadLine();
+                    gameChoise = Console.ReadLine();
                     continue;
                 }
-                bool WhoWin;
-                BlackJackGame BlackJack = new BlackJackGame();
-                WhoWin = BlackJack.PlayGame();
-                if(WhoWin)
+                bool whoWin;
+                whoWin = BlackJack.PlayGame();
+                if(whoWin)
                 {
-                    UserVictories++;
+                    user.NumOfBJVictories++;
                 }
                 else
                 {
-                    CompVictories++;
+                    comp.NumOfBJVictories++;
                 }
-                GameCounter++;
+                gameCounter++;
 
                 Console.WriteLine("More game? y/n");
-                GameChoise = Console.ReadLine();
+                gameChoise = Console.ReadLine();
             }
-            while (GameChoise != "n");
+            while (gameChoise != "n");
 
             Console.Clear();
-            Console.WriteLine("Your victories:" + UserVictories);
-            Console.WriteLine("Comp victories:" + CompVictories);
+            Console.WriteLine("Your victories:" + user.NumOfBJVictories);
+            Console.WriteLine("Comp victories:" + comp.NumOfBJVictories);
 
             Console.ReadLine();
         }
