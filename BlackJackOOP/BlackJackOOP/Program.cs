@@ -73,10 +73,10 @@ namespace BlackJack
         //Создать определённый тип колоды
         public Deck(DeckType type) 
         {
-            numOfCards = (int)type;
             if (type == DeckType.Standar36)
             {
-                Cards = new Card[36];
+                numOfCards = 36;
+                Cards = new Card[numOfCards];
                 for(int suit = 0,counter = 0; suit < 4; suit++)
                 {
                     for (int value = 2; value < 12; value++)
